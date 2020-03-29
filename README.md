@@ -8,9 +8,9 @@ Select the requeried fields and copy the content that is automatically generated
 
 [kuber-yaml-gen](https://mohansai1997.github.io/kuber-yaml-gen/)
 
-## **Supported YAML Files:🙌**
+## **Supported Kubernetes Kinds:🙌**
 
- - Cluster Role YAML File
+ - Cluster Role
  - More comming soon.
  
  ## **Want to contribute?** 
