@@ -1,0 +1,16 @@
+   apiVersion   <string>
+   kind <string>
+   metadata     <Object>
+      annotations       <map[string]string>
+      clusterName       <string>
+      creationTimestamp <string>
+      deletionGracePeriodSeconds        <integer>
+      deletionTimestamp <string>
+      finalizers        <[]string>
+      generateName      <string>
+      generation        <integer>
+      initializers      <Object>
+         pending        <[]Object>
+            name        <string>
+         result <Object>
+            apiVersion  <string>
