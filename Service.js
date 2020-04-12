@@ -3,7 +3,7 @@ Vue.component('objectcomponent', {
     props: ["arr", "updateyaml", "refvalue", "updatestring", "add_string_element_to_array", 
                     "on_string_element_in_array_change", "remove_string_element_from_array",
                     "is_object_is_empty", "indexvalue", "add_map_element_to_array", "on_map_key_element_change",
-                    "on_map_value_element_change", "remove_map_element_from_array"
+                    "on_map_value_element_change", "remove_map_element_from_array", "check_yaml_output"
                 ],
     template:`
     <div>
@@ -43,16 +43,22 @@ Vue.component('objectcomponent', {
                             </add_string_element>
                         </div>
                     </div>
-                        
+
+
+
                     <div v-for="(value, index) in value">
                         <array_string_component 
                             :refvalue="refvalue + '-' + indexvalue + '-' + key"   
                             :index=index
                             :onchange="on_string_element_in_array_change"
                             :remove="remove_string_element_from_array"
+                            v-bind:check_yaml_output="check_yaml_output"
                             > 
                         </array_string_component>
                     </div>
+
+
+                    
                 </div>
 
                 <div v-if="value[0].constructor === Object" >
@@ -78,6 +84,7 @@ Vue.component('objectcomponent', {
                                     :onkeychange="on_map_key_element_change"
                                     :onvaluechange="on_map_value_element_change"
                                     :remove="remove_map_element_from_array"
+                                    v-bind:check_yaml_output="check_yaml_output"
                                 >
                                 </array_empty_object_component>
                             </div>
@@ -103,6 +110,7 @@ Vue.component('objectcomponent', {
                                             v-bind:on_map_key_element_change="on_map_key_element_change"
                                             v-bind:on_map_value_element_change="on_map_value_element_change"
                                             v-bind:remove_map_element_from_array="remove_map_element_from_array"
+                                            v-bind:check_yaml_output="check_yaml_output"
                                             >
                                         </objectcomponent>
                                     </div>
@@ -113,7 +121,6 @@ Vue.component('objectcomponent', {
                                             :remove="remove_map_element_from_array"
                                         > 
                                         </remove_non_empty_object_element>
-            
                                     </div>
                                 </div>
                             </div>
@@ -142,6 +149,7 @@ Vue.component('objectcomponent', {
                             v-bind:on_map_key_element_change="on_map_key_element_change"
                             v-bind:on_map_value_element_change="on_map_value_element_change"
                             v-bind:remove_map_element_from_array="remove_map_element_from_array"
+                            v-bind:check_yaml_output="check_yaml_output"
                             >
                         </objectcomponent>
                     </div>
@@ -181,36 +189,40 @@ Vue.component("add_string_element", {
 })
 
 Vue.component('array_string_component', {
-    props: ["refvalue", "index", "onchange", "remove"],
+    props: ["refvalue", "index", "onchange", "remove", "check_yaml_output"],
     template: `
-        <div class="row">
-            <div class="col-sm-10">
-                <input 
-                    class="form-control" 
-                    @change="onchange(refvalue, index)"
-                >
-            </div>
-            <div class="col-sm-2">
-                <button class="btn btn-primary" @click="remove(refvalue, index)" :disabled="(index === 0)">Remove</button>
+        <div v-if="check_yaml_output(refvalue, index)">
+            <div class="row">
+                <div class="col-sm-10">
+                    <input 
+                        class="form-control" 
+                        @change="onchange(refvalue, index)"
+                    >
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-primary" @click="remove(refvalue, index)" :disabled="(index === 0)">Remove</button>
+                </div>
             </div>
         </div>
     `
 })
 
 Vue.component("array_empty_object_component", {
-    props:["refvalue", "index", "onkeychange", "onvaluechange", "remove" ],
+    props:["refvalue", "index", "onkeychange", "onvaluechange", "remove", "check_yaml_output"],
     template:`
-    <div class="row">
-        <div class="col-sm-5">
-            <p>Key</p>
-            <input class="form-control" @change="onkeychange(refvalue, index)">
-        </div>
-        <div class="col-sm-5">
-            <p>Value</p>
-            <input class="form-control" @change="onvaluechange(refvalue, index)">
-        </div>
-        <div class="col-sm-2">
-            <button @click="remove(refvalue, index)">Remove</button>
+    <div v-if="check_yaml_output(refvalue, index)">
+        <div class="row">
+            <div class="col-sm-5">
+                <p>Key</p>
+                <input class="form-control" @change="onkeychange(refvalue, index)">
+            </div>
+            <div class="col-sm-5">
+                <p>Value</p>
+                <input class="form-control" @change="onvaluechange(refvalue, index)">
+            </div>
+            <div class="col-sm-2">
+                <button @click="remove(refvalue, index)">Remove</button>
+            </div>
         </div>
     </div>
     `
@@ -288,6 +300,7 @@ new Vue({
                     port: 0000,
                     protocol: " ",
                     targetPort: " ",
+                    arrObject:[{}],
                     tempArrObject:[{
                         polrt: " "
                     }],
@@ -302,7 +315,7 @@ new Vue({
                         arrvalue: [{
                             qq: " ",
                             nesarr: {
-                                qwer: [{}]
+                                qwer: [" "]
                             }
                         }]
                     }
@@ -333,6 +346,50 @@ new Vue({
         }
     },
     methods: {
+        checkIndexValueInYamlOutput(strObjectPath, index){
+
+            let computeObjectPath = (objPath) => {
+                let pathInArr = objPath.split("-")
+                let currentPath = this.yamlOutput
+                
+                for( let i = 0; i < pathInArr.length; i++ ){
+                    if(pathInArr[i] !== "empty"){
+                        if(Number(pathInArr[i])){
+                            currentPath = currentPath[Number(pathInArr[i])]
+                        } else {
+                            if(typeof(currentPath[pathInArr[i]]) !== 'undefined'){
+                                currentPath = currentPath[pathInArr[i]]
+                            }
+                        }
+                    }
+                }
+
+                return currentPath   
+            }
+
+            let objectRef = computeObjectPath(strObjectPath)
+        
+            if(objectRef.constructor === Array){
+                if(index+1 <= objectRef.length){
+                    return true
+                } else {
+                    return false
+                }   
+            }   
+
+
+            if(objectRef.constructor === Object){
+                
+                if(index <= Object.keys(objectRef).length){
+                    console.log(index, Object.keys(objectRef).length)
+                    // console.log(strObjectPath, index, objectRef.length)
+                    return true
+                } else {
+                    return false
+                }   
+            }
+
+        },
         // This function is called while rendering to check wheather object is empty or not. Based on that value it will render different views
         isObjectIsEmpty(strObjectPath, objectKey){
 
@@ -445,20 +502,23 @@ new Vue({
             Vue.set(computeObjectPath(objectPath), parentelement, isNaN(Number(event.target.value)) ? event.target.value : Number(event.target.value))
         },
         addStringElementToArray(strObjectPath){
-            
             let computeObjectPath = (objPath) => {
                 let pathInArr = objPath.split("-")
                 let currentPathOfYamlInput = this.yamlInput
                 let currentPathOfYamlOutput = this.yamlOutput
-                
+                // console.log("before for loop", currentPathOfYamlInput)
                 for( let i = 0; i < pathInArr.length; i++ ){
+                    // console.log(currentPathOfYamlInput,pathInArr[i])    
                     if(pathInArr[i] !== "empty"){
-                        if(Number(pathInArr[i])){
-                            currentPathOfYamlInput = currentPathOfYamlInput[Number(pathInArr[i])]
-                            currentPathOfYamlOutput = currentPathOfYamlOutput[Number(pathInArr[i])]
-                        } else {
+                        if(isNaN(pathInArr[i])){
+                            // console.log("Not number", pathInArr[i])
                             currentPathOfYamlInput = currentPathOfYamlInput[pathInArr[i]]
                             currentPathOfYamlOutput = currentPathOfYamlOutput[pathInArr[i]]
+                        } else {
+                            // console.log("Its number", pathInArr[i])
+                            currentPathOfYamlInput = currentPathOfYamlInput[Number(pathInArr[i])]
+                            currentPathOfYamlOutput = currentPathOfYamlOutput[Number(pathInArr[i])]
+                            // console.log(currentPathOfYamlInput)
                         }
                     }
                 }
@@ -469,10 +529,12 @@ new Vue({
             // ----
             // Updating both yamlInput and yamlOutput data to show input fields
             // ----
+            // console.log(index)
             let [ objectYamlInputRef, objectYamlOutputRef ] = computeObjectPath(strObjectPath)
-            
+            // console.log(objectYamlInputRef, objectYamlOutputRef)
             objectYamlInputRef.push(" ")
             objectYamlOutputRef.push(" ")
+            // console.log(this.yamlInput, this.yamlOutput)
         },
         onStringElementInArrayChange(strObjectPath, index ){
 
@@ -528,7 +590,7 @@ new Vue({
             }
         },
         addMapElementTOArray(strObjectPath, index){   
-
+            
             let computeObjectPath = (objPath) => {
                 let pathInArr = objPath.split("-")
                 let currentPathOfYamlInput = this.yamlInput
@@ -545,7 +607,6 @@ new Vue({
                         }
                     }
                 }
-
                 return [currentPathOfYamlInput, currentPathOfYamlOutput]   
             }
 
@@ -559,8 +620,10 @@ new Vue({
                 objectYamlInputRef.push({})
                 Vue.set(objectYamlOutputRef, " ", " ")
             } else {
+                
                 let objectValueInArray  = objectYamlInputRef[0]
                 objectYamlInputRef.push(objectValueInArray)
+                console.log("Triggered") 
                 objectYamlOutputRef.push({})
             }
         },
@@ -578,7 +641,6 @@ new Vue({
                         }
                     }
                 }
-
                 return currentPath   
             }
 
@@ -601,7 +663,6 @@ new Vue({
                         }
                     }
                 }
-
                 return currentPath   
             }
 
@@ -638,7 +699,7 @@ new Vue({
                 let [ objectYamlInputRef, objectYamlOutputRef ] = computeObjectPath(strObjectPath)
                   
                 Vue.delete(objectYamlInputRef, index)
-                Vue.delete(objectYamlOutputRef, index)
+                Vue.delete(objectYamlOutputRef, Object.keys(objectYamlOutputRef)[index-1])
             }
         }
     },
