@@ -291,12 +291,16 @@ new Vue({
             status: deploymentStatus
         },
         yamlOutput:{
+            apiVersion: " ",
             metadata:{},
             spec: {},
             status: {}
         }
     },
     methods: {
+        onApiVersionChange(){
+            this.yamlOutput.apiVersion = event.target.value
+        },
         addIdNameToIdList(){
             if(this.idList.indexOf(event.target.value) === -1){
                 this.idList.push(event.target.value)
@@ -464,19 +468,16 @@ new Vue({
                 let pathInArr = objPath.split("-")
                 let currentPathOfYamlInput = this.yamlInput
                 let currentPathOfYamlOutput = this.yamlOutput
-                // console.log("before for loop", currentPathOfYamlInput)
+                
                 for( let i = 0; i < pathInArr.length; i++ ){
-                    // console.log(currentPathOfYamlInput,pathInArr[i])    
+                       
                     if(pathInArr[i] !== "empty"){
                         if(isNaN(pathInArr[i])){
-                            // console.log("Not number", pathInArr[i])
                             currentPathOfYamlInput = currentPathOfYamlInput[pathInArr[i]]
                             currentPathOfYamlOutput = currentPathOfYamlOutput[pathInArr[i]]
                         } else {
-                            // console.log("Its number", pathInArr[i])
                             currentPathOfYamlInput = currentPathOfYamlInput[Number(pathInArr[i])]
                             currentPathOfYamlOutput = currentPathOfYamlOutput[Number(pathInArr[i])]
-                            // console.log(currentPathOfYamlInput)
                         }
                     }
                 }
@@ -487,12 +488,10 @@ new Vue({
             // ----
             // Updating both yamlInput and yamlOutput data to show input fields
             // ----
-            // console.log(index)
+            
             let [ objectYamlInputRef, objectYamlOutputRef ] = computeObjectPath(strObjectPath)
-            // console.log(objectYamlInputRef, objectYamlOutputRef)
             objectYamlInputRef.push(" ")
             objectYamlOutputRef.push(" ")
-            // console.log(this.yamlInput, this.yamlOutput)
         },
         onStringElementInArrayChange(strObjectPath, index ){
 
@@ -578,10 +577,8 @@ new Vue({
                 objectYamlInputRef.push({})
                 Vue.set(objectYamlOutputRef, " ", " ")
             } else {
-                
                 let objectValueInArray  = objectYamlInputRef[0]
                 objectYamlInputRef.push(objectValueInArray)
-                console.log("Triggered") 
                 objectYamlOutputRef.push({})
             }
         },
@@ -664,7 +661,7 @@ new Vue({
     computed:{
         yamlFile () {
             let yamlObj={
-                apiVersion: "v1",
+                apiVersion: this.yamlOutput.apiVersion,
                 kind: "Deployment",
                 metadata: this.yamlOutput.metadata,
                 spec: this.yamlOutput.spec,
