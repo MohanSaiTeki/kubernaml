@@ -665,7 +665,7 @@ new Vue({
         yamlFile () {
             let yamlObj={
                 apiVersion: "v1",
-                kind: "Service",
+                kind: "Deployment",
                 metadata: this.yamlOutput.metadata,
                 spec: this.yamlOutput.spec,
                 status: this.yamlOutput.status,
