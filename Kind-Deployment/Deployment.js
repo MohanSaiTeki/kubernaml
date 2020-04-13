@@ -8,7 +8,7 @@ Vue.component('objectcomponent', {
                 ],
     template:`
     <div>
-        <div style="padding: 12px">
+        <div style="margin: 12px">
             <button 
                 v-for="(value, key) in arr" 
                 class="btn btn-primary" 
@@ -36,7 +36,7 @@ Vue.component('objectcomponent', {
             </button>
         </div>
         <div v-for="(value, key) in arr">
-            <div v-if="( (!!value) && (value.constructor === String) ) || (value.constructor === Number)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key" style="padding: 12px">
+            <div v-if="( (!!value) && (value.constructor === String) ) || (value.constructor === Number)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key">
                 <string_component 
                     :stringvalue=key 
                     :refvalue="refvalue + '-' + indexvalue + '-' + key" 
@@ -49,7 +49,7 @@ Vue.component('objectcomponent', {
             <div v-if="(!!value) && (value.constructor === Array)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key">
 
                 <div v-if="value[0].constructor === String">
-                    <div class="row" style="padding: 12px">
+                    <div class="row" style="margin: 12px">
                         <div class="col-sm-6">
                             <p> {{ key }} </p>        
                         </div>
@@ -61,23 +61,24 @@ Vue.component('objectcomponent', {
                             >
                             </add_string_element>
                         </div>
-                    </div>
-
-                    <div v-for="(value, index) in value">
-                        <array_string_component 
-                            :refvalue="refvalue + '-' + indexvalue + '-' + key"   
-                            :index=index
-                            :onchange="on_string_element_in_array_change"
-                            :remove="remove_string_element_from_array"
-                            v-bind:check_yaml_output="check_yaml_output"
-                            > 
-                        </array_string_component>
-                    </div>                    
+                        <div class="col-sm-12">
+                            <div v-for="(value, index) in value">
+                                <array_string_component 
+                                    :refvalue="refvalue + '-' + indexvalue + '-' + key"   
+                                    :index=index
+                                    :onchange="on_string_element_in_array_change"
+                                    :remove="remove_string_element_from_array"
+                                    v-bind:check_yaml_output="check_yaml_output"
+                                    > 
+                                </array_string_component>
+                            </div>        
+                        </div> 
+                    </div>           
                 </div>
 
                 <div v-if="value[0].constructor === Object" >
-                    <div class="row" style="padding: 24px">
-                        <div class="col-sm-6">
+                    <div class="row" style="margin: 24px">
+                        <div class="col-sm-6" style="overflow: hidden;" >
                             <p> {{ key }} </p>
                         </div>
                         <div class="col-sm-6">
@@ -108,7 +109,7 @@ Vue.component('objectcomponent', {
                     <div v-else>
                         <div class="col-sm-12">
                             <div v-for="(obj, index) in value" >
-                                <div class="row">
+                                <div class="row ">
                                     <div class="col-sm-10">
                                         <objectcomponent 
                                             :arr=obj 
@@ -145,10 +146,10 @@ Vue.component('objectcomponent', {
                 </div>
             </div>
     
-            <div v-if="(!!value) && (value.constructor === Object)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key"  back>
-                <div class="row" style="padding: 12px">
+            <div v-if="(!!value) && (value.constructor === Object)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key">
+                <div class="row" style="margin: 12px">
                     <div class="col-sm-12">
-                        {{ key }}   <!-- name of the field -->
+                        {{ key }}  <!-- name of the field -->
                     </div>
                     <div class="col-sm-12">
                         <objectcomponent 
@@ -181,7 +182,7 @@ Vue.component('objectcomponent', {
 Vue.component('string_component', {
     props:['stringvalue', 'refvalue', "changestring", "parentelement"],
     template:`
-        <div class="row" style="padding: 12px">
+        <div class="row" style="margin: 12px">
             <div class="col-sm-6">
                 {{ stringvalue }}
             </div>
@@ -200,7 +201,7 @@ Vue.component("add_string_element", {
     template:`
     <div class="row">
         <div class="col-sm">
-            <button @click="add(refvalue)">Add element</button>
+            <button class="btn btn-primary" @click="add(refvalue)">Add element</button>
         </div>
     </div>
     `
@@ -210,7 +211,7 @@ Vue.component('array_string_component', {
     props: ["refvalue", "index", "onchange", "remove", "check_yaml_output"],
     template: `
         <div v-if="check_yaml_output(refvalue, index)">
-            <div class="row" style="padding: 8px 10px 8px 10px;">
+            <div class="row" style="margin: 8px 10px 8px 10px;">
                 <div class="col-sm-10">
                     <input 
                         class="form-control" 
@@ -229,7 +230,7 @@ Vue.component("array_empty_object_component", {
     props:["refvalue", "index", "onkeychange", "onvaluechange", "remove", "check_yaml_output"],
     template:`
     <div v-if="check_yaml_output(refvalue, index)">
-        <div class="row" style="padding: 12px 24px 12px 24px;">
+        <div class="row" style="margin: 12px 24px 12px 24px;">
             <div class="col-sm-5">
                 <div class="row">
                     <div class="col-sm-2">
@@ -251,7 +252,7 @@ Vue.component("array_empty_object_component", {
                 </div>
             </div>
             <div class="col-sm-2">
-                <button @click="remove(refvalue, index)">Remove</button>
+                <button class="btn btn-primary"  @click="remove(refvalue, index)">Remove</button>
             </div>
         </div>
     </div>
@@ -262,8 +263,8 @@ Vue.component("add_object_element", {
     props:["index", "refvalue", "add"],
     template:`
     <div class="row">
-        <div class="col-sm">
-            <button @click="add(refvalue)">Add element</button>
+        <div class="col-sm" style="text-align: right">
+            <button class="btn btn-primary" @click="add(refvalue)">Add element</button>
         </div>
     </div>
     `
@@ -274,7 +275,7 @@ Vue.component("remove_non_empty_object_element", {
     template:`
     <div class="row">
         <div class="col-sm">
-            <button @click="remove(refvalue, index)">Remove</button>
+            <button class="btn btn-primary"  @click="remove(refvalue, index)">Remove</button>
         </div>
     </div>
     `
