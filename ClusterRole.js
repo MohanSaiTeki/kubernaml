@@ -196,7 +196,6 @@ let vue = new Vue({
                             }
                         ]
                 }
-                console.log("[[[[[")
         return jsyaml.dump(yamlObj);
         }
     }

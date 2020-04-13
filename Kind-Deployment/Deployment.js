@@ -3,22 +3,40 @@ Vue.component('objectcomponent', {
     props: ["arr", "updateyaml", "refvalue", "updatestring", "add_string_element_to_array", 
                     "on_string_element_in_array_change", "remove_string_element_from_array",
                     "is_object_is_empty", "indexvalue", "add_map_element_to_array", "on_map_key_element_change",
-                    "on_map_value_element_change", "remove_map_element_from_array", "check_yaml_output"
+                    "on_map_value_element_change", "remove_map_element_from_array", "check_yaml_output", 
+                    "check_id_name_in_id_list", "add_id_name_to_id_list"
                 ],
     template:`
     <div>
-        <button 
-            v-for="(value, key) in arr" 
-            class="btn btn-primary" 
-            data-toggle="collapse" 
-            :data-target="'#' + refvalue + '-' + indexvalue + '-' + key" 
-            :value="refvalue + '-' + indexvalue + '-' + key" 
-            @click="updateyaml"
-            >
-            {{ key }}
-        </button>
+        <div style="padding: 12px">
+            <button 
+                v-for="(value, key) in arr" 
+                class="btn btn-primary" 
+                data-toggle="collapse" 
+                :data-target="'#' + refvalue + '-' + indexvalue + '-' + key" 
+                :value="refvalue + '-' + indexvalue + '-' + key" 
+                @click="updateyaml(); add_id_name_to_id_list()"
+                style="
+                    margin: 2px;
+                    padding: 6px;
+                    border-radius: 6px;
+                    outline: none
+                    " 
+                v-bind:style=" (check_id_name_in_id_list(refvalue + '-' + indexvalue + '-' + key) !== -1) ? { 
+                    'background-color' : '#0000ff',
+                    'color' : '#FFFFFF',
+                    'border' : '1px solid #8080ff'
+                    } : {  
+                    'background-color' : '#FFFFFF',
+                    'color' : '#8080ff',
+                    'border' : '1px solid #8080ff'
+                } "
+                >
+                {{ key }}
+            </button>
+        </div>
         <div v-for="(value, key) in arr">
-            <div v-if="( (!!value) && (value.constructor === String) ) || (value.constructor === Number)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key" >
+            <div v-if="( (!!value) && (value.constructor === String) ) || (value.constructor === Number)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key" style="padding: 12px">
                 <string_component 
                     :stringvalue=key 
                     :refvalue="refvalue + '-' + indexvalue + '-' + key" 
@@ -28,9 +46,10 @@ Vue.component('objectcomponent', {
                 </string_component>
             </div>
              
-            <div v-if="(!!value) && (value.constructor === Array)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key" >
+            <div v-if="(!!value) && (value.constructor === Array)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key">
+
                 <div v-if="value[0].constructor === String">
-                    <div class="row">
+                    <div class="row" style="padding: 12px">
                         <div class="col-sm-6">
                             <p> {{ key }} </p>        
                         </div>
@@ -44,8 +63,6 @@ Vue.component('objectcomponent', {
                         </div>
                     </div>
 
-
-
                     <div v-for="(value, index) in value">
                         <array_string_component 
                             :refvalue="refvalue + '-' + indexvalue + '-' + key"   
@@ -55,14 +72,11 @@ Vue.component('objectcomponent', {
                             v-bind:check_yaml_output="check_yaml_output"
                             > 
                         </array_string_component>
-                    </div>
-
-
-                    
+                    </div>                    
                 </div>
 
                 <div v-if="value[0].constructor === Object" >
-                    <div class="row">
+                    <div class="row" style="padding: 24px">
                         <div class="col-sm-6">
                             <p> {{ key }} </p>
                         </div>
@@ -75,6 +89,7 @@ Vue.component('objectcomponent', {
                             </add_object_element>
                         </div>
                     </div>
+
                     <div v-if="is_object_is_empty(refvalue, key)">
                         <div v-for="(elements, index) in value">
                             <div v-if="index !== 0">
@@ -90,7 +105,6 @@ Vue.component('objectcomponent', {
                             </div>
                         </div>
                     </div>
-
                     <div v-else>
                         <div class="col-sm-12">
                             <div v-for="(obj, index) in value" >
@@ -102,6 +116,8 @@ Vue.component('objectcomponent', {
                                             :refvalue="refvalue + '-' + indexvalue + '-' + key"
                                             v-bind:indexvalue="index" 
                                             v-bind:updatestring="updatestring"
+                                            v-bind:add_id_name_to_id_list="add_id_name_to_id_list"
+                                            v-bind:check_id_name_in_id_list="check_id_name_in_id_list"
                                             v-bind:is_object_is_empty="is_object_is_empty"
                                             v-bind:add_string_element_to_array="add_string_element_to_array"
                                             v-bind:on_string_element_in_array_change="on_string_element_in_array_change"
@@ -129,8 +145,8 @@ Vue.component('objectcomponent', {
                 </div>
             </div>
     
-            <div v-if="(!!value) && (value.constructor === Object)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key">
-                <div class="row">
+            <div v-if="(!!value) && (value.constructor === Object)" class="collapse" :id="refvalue + '-' + indexvalue + '-' + key"  back>
+                <div class="row" style="padding: 12px">
                     <div class="col-sm-12">
                         {{ key }}   <!-- name of the field -->
                     </div>
@@ -141,6 +157,8 @@ Vue.component('objectcomponent', {
                             v-bind:refvalue="refvalue + '-' + indexvalue + '-' + key " 
                             indexvalue="empty"
                             v-bind:updatestring="updatestring"
+                            v-bind:add_id_name_to_id_list="add_id_name_to_id_list"
+                            v-bind:check_id_name_in_id_list="check_id_name_in_id_list"
                             v-bind:is_object_is_empty="is_object_is_empty"
                             v-bind:add_string_element_to_array="add_string_element_to_array"
                             v-bind:on_string_element_in_array_change="on_string_element_in_array_change"
@@ -163,7 +181,7 @@ Vue.component('objectcomponent', {
 Vue.component('string_component', {
     props:['stringvalue', 'refvalue', "changestring", "parentelement"],
     template:`
-        <div class="row">
+        <div class="row" style="padding: 12px">
             <div class="col-sm-6">
                 {{ stringvalue }}
             </div>
@@ -192,7 +210,7 @@ Vue.component('array_string_component', {
     props: ["refvalue", "index", "onchange", "remove", "check_yaml_output"],
     template: `
         <div v-if="check_yaml_output(refvalue, index)">
-            <div class="row">
+            <div class="row" style="padding: 8px 10px 8px 10px;">
                 <div class="col-sm-10">
                     <input 
                         class="form-control" 
@@ -211,14 +229,26 @@ Vue.component("array_empty_object_component", {
     props:["refvalue", "index", "onkeychange", "onvaluechange", "remove", "check_yaml_output"],
     template:`
     <div v-if="check_yaml_output(refvalue, index)">
-        <div class="row">
+        <div class="row" style="padding: 12px 24px 12px 24px;">
             <div class="col-sm-5">
-                <p>Key</p>
-                <input class="form-control" @change="onkeychange(refvalue, index)">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <p>Key</p>
+                    </div>
+                    <div class="col-sm-10">
+                        <input class="form-control" @change="onkeychange(refvalue, index)">
+                    </div>
+                </div>
             </div>
             <div class="col-sm-5">
-                <p>Value</p>
-                <input class="form-control" @change="onvaluechange(refvalue, index)">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <p>Value</p>
+                    </div>
+                    <div class="col-sm-10">
+                        <input class="form-control" @change="onvaluechange(refvalue, index)">
+                    </div>
+                </div>
             </div>
             <div class="col-sm-2">
                 <button @click="remove(refvalue, index)">Remove</button>
@@ -253,90 +283,11 @@ Vue.component("remove_non_empty_object_element", {
 new Vue({
     el: "#app",
     data: {
+        idList : [],
         yamlInput: {
-            metadata: {
-                annotations: [{}],
-                clusterName: " ",
-                creationTimestamp: " ",
-                deletionGracePeriodSeconds:  0,
-                deletionTimestamp: " ",
-                finalizers: [''],
-                generateName: " ",
-                generation: 0,
-                labels: [{}],
-                managedFields: [{
-                    apiVersion: " ",
-                    fields: " ",
-                    manager: " ",
-                    operation: " ",
-                    time: " "
-                }],
-                name: " ",
-                namespace: " ",
-                ownerReferences: [{
-                    apiVersion: " ",
-                    blockOwnerDeletion: " ",
-                    controller: " ",
-                    kind: " ",
-                    name: " ",
-                    uid: " "
-                }],
-                resourceVersion: " ",
-                selfLink: " ",
-                uid: " "
-            },
-            spec: {
-                clusterIP: " ",
-                externalIPs: " ",
-                externalName: " ",
-                externalTrafficPolicy: " ",
-                healthCheckNodePort: 0000,
-                loadBalancerIP: " ",
-                loadBalancerSourceRanges: [""],
-                ports: [{
-                    name: " ",
-                    nodePort: 0000,
-                    port: 0000,
-                    protocol: " ",
-                    targetPort: " ",
-                    arrObject:[{}],
-                    tempArrObject:[{
-                        polrt: " "
-                    }],
-                    nestedObject:[{
-                        arr:[{}]
-                    }],
-                    tempArrString:[""],
-                    tempObject:{
-                        name1: {
-                            pp: " "
-                        },
-                        arrvalue: [{
-                            qq: " ",
-                            nesarr: {
-                                qwer: [" "]
-                            }
-                        }]
-                    }
-                }],
-                publishNotReadyAddresses: " ",
-                selector: [""],
-                sessionAffinity: " ",
-                sessionAffinityConfig: {
-                    clientIP: {
-                        timeoutSeconds: 0000,
-                        type: " "
-                        }
-                    }
-                },
-            status: {
-                loadBalancer: {
-                    ingress: {
-                        hostname: " ",
-                        ip: " ",
-                    }
-                }
-            }
+            metadata: deploymentMetadata,
+            spec: deploymentSpec,
+            status: deploymentStatus
         },
         yamlOutput:{
             metadata:{},
@@ -345,6 +296,17 @@ new Vue({
         }
     },
     methods: {
+        addIdNameToIdList(){
+            if(this.idList.indexOf(event.target.value) === -1){
+                this.idList.push(event.target.value)
+            } else {
+                let index = this.idList.indexOf(event.target.value);
+                if (index !== -1) this.idList.splice(index, 1);
+            }
+        },
+        checkIdNameInIdList(idName){
+            return this.idList.indexOf(idName)
+        },
         checkIndexValueInYamlOutput(strObjectPath, index){
 
             let computeObjectPath = (objPath) => {
@@ -362,7 +324,6 @@ new Vue({
                         }
                     }
                 }
-
                 return currentPath   
             }
 
@@ -377,11 +338,8 @@ new Vue({
             }   
 
 
-            if(objectRef.constructor === Object){
-                
+            if(objectRef.constructor === Object){   
                 if(index <= Object.keys(objectRef).length){
-                    console.log(index, Object.keys(objectRef).length)
-                    // console.log(strObjectPath, index, objectRef.length)
                     return true
                 } else {
                     return false

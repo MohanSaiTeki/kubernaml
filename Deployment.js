@@ -1,3 +1,0 @@
-let vue = new Vue({
-
-})
