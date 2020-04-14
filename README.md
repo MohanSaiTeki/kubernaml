@@ -4,23 +4,24 @@ A simple Kubernetes YAML Generator. Inspired from [Kubergui](https://github.com/
 
 Select the requeried fields and copy the content that is automatically generated and past where you want.
 
-## **Demo🎉**
+### **Demo🎉**
 
 [kuber-yaml-gen](https://mohansai1997.github.io/kuber-yaml-gen/)
 
-## **Supported Kubernetes Kinds:🙌**
+### **Supported Kubernetes Kinds:🙌**
 
- - Cluster Role
+ - [Cluster Role](https://mohansai1997.github.io/kuber-yaml-gen/ClusterRole/ClusterRole.html)
+ - [Deployment](https://mohansai1997.github.io/kuber-yaml-gen/Deployment/Deployment.html)
  - More comming soon.
  
- ## **Want to contribute?** 
+### **Want to contribute?** 
  - Just Fork the project
  - Develop the Code and submit with pull request🥂.
 
-## **Got any Idea to improve this project💡?**
+### **Got any Idea to improve this project💡?**
 
  - Create Issue with explaining your Idea🎊.
 
-## **NOTE:**
+### **NOTE:**
 
 Kuber-yaml-gen doesn't validate the your YAML file it simple generate the YAML file from the options available.
