@@ -201,7 +201,7 @@ Vue.component("add_string_element", {
     template:`
     <div class="row">
         <div class="col-sm">
-            <button class="btn btn-primary" @click="add(refvalue)">Add element</button>
+            <button class="btn btn-primary" @click="add(refvalue)">Add</button>
         </div>
     </div>
     `
@@ -264,7 +264,7 @@ Vue.component("add_object_element", {
     template:`
     <div class="row">
         <div class="col-sm" style="text-align: right">
-            <button class="btn btn-primary" @click="add(refvalue)">Add element</button>
+            <button class="btn btn-primary" @click="add(refvalue)">Add</button>
         </div>
     </div>
     `
