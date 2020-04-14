@@ -7,6 +7,6 @@ Welcome to Kuber-yaml-gen GitHub pages branch.
  - [Cluster Role](https://mohansai1997.github.io/kuber-yaml-gen/ClusterRole/ClusterRole.html)
  - [Deployment](https://mohansai1997.github.io/kuber-yaml-gen/Deployment/Deployment.html)
  
- ### Coming soon
+### Coming soon
  
  - Service
