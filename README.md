@@ -10,8 +10,8 @@ Select the requeried fields and copy the content that is automatically generated
 
 ### **Supported Kubernetes Kinds:🙌**
 
- - [Cluster Role](https://mohansai1997.github.io/kuber-yaml-gen/ClusterRole/ClusterRole.html)
- - [Deployment](https://mohansai1997.github.io/kuber-yaml-gen/Deployment/Deployment.html)
+ - [Cluster Role](https://mohansai1997.github.io/kube-yaml-gen/ClusterRole/ClusterRole.html)
+ - [Deployment](https://mohansai1997.github.io/kube-yaml-gen/Deployment/Deployment.html)
  - More comming soon.
  
 ### **Want to contribute?** 
