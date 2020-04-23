@@ -25,3 +25,10 @@ Select the requeried fields and copy the content that is automatically generated
 ### **NOTE:**
 
 Kuber-yaml-gen doesn't validate the your YAML file it simple generate the YAML file from the options available.
+
+
+### Tech stack behind this project
+
+- Vuejs
+- js-yaml
+- Bootstrap
