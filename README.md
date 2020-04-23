@@ -6,12 +6,12 @@ Select the requeried fields and copy the content that is automatically generated
 
 ### **Demo🎉**
 
-[kuber-yaml-gen](https://mohansai1997.github.io/kuber-yaml-gen/)
+[kuber-yaml-gen](https://kube-yaml-gen.github.io/)
 
 ### **Supported Kubernetes Kinds:🙌**
 
- - [Cluster Role](https://mohansai1997.github.io/kube-yaml-gen/ClusterRole/ClusterRole.html)
- - [Deployment](https://mohansai1997.github.io/kube-yaml-gen/Deployment/Deployment.html)
+ - [Cluster Role](https://kube-yaml-gen.github.io/ClusterRole/ClusterRole.html)
+ - [Deployment](https://kube-yaml-gen.github.io/Deployment/Deployment.html)
  - More comming soon.
  
 ### **Want to contribute?** 
