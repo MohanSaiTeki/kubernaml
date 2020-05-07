@@ -1,5 +1,8 @@
 
 # kuber-yaml-gen
+
+![Deployment](https://github.com/MohanSai1997/kube-yaml-gen/workflows/Deployment/badge.svg?branch=deploy)
+
 A simple Kubernetes YAML Generator. Inspired from [Kubergui](https://github.com/BrandonPotter/kubergui) 
 
 Select the requeried fields and copy the content that is automatically generated and past where you want.
