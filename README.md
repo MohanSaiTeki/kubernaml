@@ -1,7 +1,5 @@
 # kube-yaml-gen
 
-![Deployment](https://github.com/MohanSai1997/kube-yaml-gen/workflows/Deployment/badge.svg?branch=deploy)
-
 Welcome to Kuber-yaml-gen GitHub pages branch.
 
 ### Live Kubernetes Kinds
