@@ -44,5 +44,5 @@ jobs:
         
     - name: Pusing the files to remote repo 
       run: |
-        cd new
+        cd kube-yaml-gen.github.io
         git push origin master
