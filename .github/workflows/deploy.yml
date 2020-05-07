@@ -1,0 +1,12 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  Publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check pwd
+        run: pwd
