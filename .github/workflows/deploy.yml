@@ -7,6 +7,42 @@ on:
 jobs:
   Publish:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: /home/runner/work/kube-yaml-gen
+        
     steps:
-      - name: Check pwd
-        run: pwd
+    - name: use action/checkout@v2 
+      uses: actions/checkout@v2
+  
+    - name: Setting up GitHub user
+      run: |
+        git config --global user.email "tmohansk@gmail.com"
+        git config --global user.name "Mohan Sai"
+        
+    - name: Using GitHub Repo Secrets
+      uses: fregante/setup-git-token@v1
+      with:
+        token: ${{ secrets.DEPLOYMENT_KEY }}
+      
+    - name: Cloning remote GitHub Repo
+      run: |
+        git clone https://github.com/kube-yaml-gen/kube-yaml-gen.github.io.git
+      
+    - name: Copying files from present repo to remote repo
+      run: cp -r kube-yaml-gen/* kube-yaml-gen.github.io/
+      
+    - name: Adding the files to remote repo
+      run: |
+        cd kube-yaml-gen.github.io
+        git add --all
+        
+    - name: Commiting the files to remote repo
+      run: |
+        cd kube-yaml-gen.github.io
+        git commit -m "${{ github.event.head_commit.message }}"
+        
+    - name: Pusing the files to remote repo 
+      run: |
+        cd new
+        git push origin master
