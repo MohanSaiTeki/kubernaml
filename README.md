@@ -10,3 +10,4 @@ Welcome to Kuber-yaml-gen GitHub pages branch.
 ### Coming soon
  
  - Service
+ - ReplicaSet
