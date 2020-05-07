@@ -1,0 +1,99 @@
+body {
+    margin:0px; 
+    padding:0px; 
+    font-family: "Roboto";
+    background-image: url(./images/Ellipse-1.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.content {
+    width: 100%;
+    margin-top: 96px;
+    text-align: center;
+}
+
+.title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 4rem;
+    line-height: 75px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.tag {
+    width: 60%;
+    margin: 36px auto 0px auto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 28px;
+    color: #FFFFFF;
+}
+
+.para-1 {
+    width: 80%;
+    margin: 14% auto 0px auto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 42px;
+    text-align: center;
+}
+
+.footer {
+    width: 100%;
+    height: 144px;
+    background: #0029FF;
+}
+
+.buttons {
+    width: 70%;
+    padding: 4px;
+    color: #5D35FF;;
+    background: #FFFFFF;
+    border: 2px solid #5D35FF;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 26px rgba(0, 0, 0, 0.16);
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 28px;
+    text-align: center;
+}
+
+
+@media (max-width: 768px) { 
+    html > body {
+        background-image: none;
+        background-color: #0029FF;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .tag {
+        font-size: 1.4rem;
+    }
+
+    .para-1 {
+        color: white;
+    }
+
+    .bi-arrow-right-short {
+        width: 30%;
+        transform: rotate(90deg);
+        fill: white;
+    }
+
+    .supported-text {
+        color: white;
+    }
+
+    .buttons {
+        width: 100%;
+        margin: 12px;
+        border:none;
+    }
+}
