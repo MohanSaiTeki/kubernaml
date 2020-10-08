@@ -1,3 +1,5 @@
+# kubectl explain deployment --recursive
+
 dict_data = {}
 space_count = 3
 
