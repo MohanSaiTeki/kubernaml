@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.8.2/js-yaml.min.js"></script>
+  <title>Service File: kuber-yaml-gen</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="row">
+      <div class="col-sm-7" style="padding: 24px">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Api Version</label>
+              <input type="email" class="form-control" @change="onApiVersionChange">
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <!-- metadata title -->
+            <button style="width: 100%; background-color: #0000ff; color: #FFFFFF; border: 1px solid #8080ff"
+              class="btn btn-primary" type="button" data-toggle="collapse" data-target="#metadata">
+              metadata
+            </button>
+
+            <!-- metadata collapse -->
+            <div class="collapse" id="metadata">
+              <objectcomponent v-bind:Arr="yamlInput.metadata" v-bind:updateyaml="addObjectElement"
+                v-bind:updatestring="onStringChange" refvalue="metadata" indexvalue="empty"
+                v-bind:add_id_name_to_id_list="addIdNameToIdList" v-bind:check_id_name_in_id_list="checkIdNameInIdList"
+                v-bind:is_object_is_empty="isObjectIsEmpty" v-bind:add_string_element_to_array="addStringElementToArray"
+                v-bind:on_string_element_in_array_change="onStringElementInArrayChange"
+                v-bind:remove_string_element_from_array="removeStringElementFromArray"
+                v-bind:add_map_element_to_array="addMapElementTOArray"
+                v-bind:on_map_key_element_change="onMapKeyElementChange"
+                v-bind:on_map_value_element_change="onValueKeyElementChange"
+                v-bind:remove_map_element_from_array="removeMapElementFromArray"
+                v-bind:check_yaml_output="checkIndexValueInYamlOutput">
+              </objectcomponent>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <!-- spec title -->
+            <button style="width: 100%; background-color: #0000ff; color: #FFFFFF; border: 1px solid #8080ff"
+              class="btn btn-primary" type="button" data-toggle="collapse" data-target="#spec">
+              spec
+            </button>
+
+            <!-- spec collapse -->
+            <div class="collapse" id="spec">
+              <objectcomponent v-bind:arr="yamlInput.spec" v-bind:updateyaml="addObjectElement"
+                v-bind:updatestring="onStringChange" refvalue="spec" indexvalue="empty"
+                v-bind:add_id_name_to_id_list="addIdNameToIdList" v-bind:check_id_name_in_id_list="checkIdNameInIdList"
+                v-bind:is_object_is_empty="isObjectIsEmpty" v-bind:add_string_element_to_array="addStringElementToArray"
+                v-bind:on_string_element_in_array_change="onStringElementInArrayChange"
+                v-bind:remove_string_element_from_array="removeStringElementFromArray"
+                v-bind:add_map_element_to_array="addMapElementTOArray"
+                v-bind:on_map_key_element_change="onMapKeyElementChange"
+                v-bind:on_map_value_element_change="onValueKeyElementChange"
+                v-bind:remove_map_element_from_array="removeMapElementFromArray"
+                v-bind:check_yaml_output="checkIndexValueInYamlOutput">
+              </objectcomponent>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <!-- status title -->
+            <button style="width: 100%; background-color: #0000ff; color: #FFFFFF; border: 1px solid #8080ff"
+              class="btn btn-primary" type="button" data-toggle="collapse" data-target="#status">
+              status
+            </button>
+
+            <!-- status collapse -->
+            <div class="collapse" id="status">
+              <objectcomponent v-bind:arr="yamlInput.status" v-bind:updateyaml="addObjectElement"
+                v-bind:updatestring="onStringChange" refvalue="status" indexvalue="empty"
+                v-bind:add_id_name_to_id_list="addIdNameToIdList" v-bind:check_id_name_in_id_list="checkIdNameInIdList"
+                v-bind:is_object_is_empty="isObjectIsEmpty" v-bind:add_string_element_to_array="addStringElementToArray"
+                v-bind:on_string_element_in_array_change="onStringElementInArrayChange"
+                v-bind:remove_string_element_from_array="removeStringElementFromArray"
+                v-bind:add_map_element_to_array="addMapElementTOArray"
+                v-bind:on_map_key_element_change="onMapKeyElementChange"
+                v-bind:on_map_value_element_change="onValueKeyElementChange"
+                v-bind:remove_map_element_from_array="removeMapElementFromArray"
+                v-bind:check_yaml_output="checkIndexValueInYamlOutput">
+              </objectcomponent>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5" style="padding: 24px">
+        <div style="position: sticky; top: 0;">
+          <h4>Generated YAML</h4>
+          <div class="jumbotron">
+            <!-- Dont add space -->
+            <pre>{{ yamlFile }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script src="./yaml-value.js"></script>
+  <script src="./Deployment.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
